@@ -4,6 +4,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudyKart</title>
 
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
 <style>
 body{margin:0;font-family:Arial;background:#eaeded}
 
@@ -14,11 +18,24 @@ body{margin:0;font-family:Arial;background:#eaeded}
  justify-content:space-between;
  padding:10px;
 }
+
 .menu{font-size:22px;cursor:pointer}
 .logo{color:#ff9900;font-weight:bold;font-size:20px}
+
 .search input{
  padding:8px;border:none;border-radius:4px;
  width:180px;
+}
+
+#userArea{
+ cursor:pointer;
+ display:flex;
+ align-items:center;
+ gap:6px;
+}
+
+#userArea img{
+ width:25px;height:25px;border-radius:50%;
 }
 
 /* SIDE PANEL */
@@ -33,6 +50,7 @@ body{margin:0;font-family:Arial;background:#eaeded}
  z-index:1000;
  padding:20px;
 }
+
 #sideMenu.active{transform:translateX(0)}
 
 #overlay{
@@ -50,7 +68,8 @@ body{margin:0;font-family:Arial;background:#eaeded}
  top:50%;left:50%;
  transform:translate(-50%,-50%);
  background:white;
- padding:20px;border-radius:10px;
+ padding:20px;
+ border-radius:10px;
  z-index:2000;
 }
 
@@ -60,13 +79,16 @@ body{margin:0;font-family:Arial;background:#eaeded}
  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
  gap:15px;padding:15px;
 }
+
 .card{
  background:white;padding:10px;
  border-radius:10px;text-align:center;
 }
+
 .card img{
  width:100%;height:150px;object-fit:cover;
 }
+
 .price{color:#b12704;font-weight:bold}
 
 button{
@@ -87,10 +109,14 @@ button{
 <div class="navbar">
  <div class="menu" onclick="openMenu()">☰</div>
  <div class="logo">StudyKart</div>
+
  <div class="search">
    <input type="text" placeholder="Search..." onkeyup="searchProduct()" id="search">
  </div>
- <div onclick="openLogin()">👤</div>
+
+ <div id="userArea" onclick="openLogin()">
+  👤 Login
+ </div>
 </div>
 
 <!-- OVERLAY -->
@@ -100,7 +126,6 @@ button{
 <div id="sideMenu">
  <h3>📌 Menu</h3>
 
- <h4>🔥 Trending</h4>
  <p onclick="filterProduct('')">Show All</p>
  <p onclick="filterProduct('book')">Books</p>
  <p onclick="filterProduct('calculator')">Calculator</p>
@@ -108,10 +133,8 @@ button{
 
  <hr>
 
- <h4>👤 Account</h4>
  <p onclick="openLogin()">Sign In</p>
- <p>Your Account</p>
- <p onclick="aboutus()">About Us</p>
+ <p onclick="openAbout()">About Us</p>
 
  <br>
  <button onclick="closeMenu()">Close</button>
@@ -120,13 +143,21 @@ button{
 <!-- LOGIN -->
 <div id="loginBox">
  <h3>Login</h3>
- <button>Login with Google</button>
+ <button onclick="loginWithGoogle()">Login with Google</button>
  <br><br>
  <button onclick="closeLogin()">Close</button>
 </div>
 
+<!-- ABOUT -->
+<div id="aboutBox" style="display:none;position:fixed;top:50%;left:50%;
+transform:translate(-50%,-50%);background:white;padding:20px;border-radius:10px;z-index:2000;">
+<h3>About StudyKart</h3>
+<p>StudyKart is an affiliate store for students to find books, calculators and study tools.</p>
+<button onclick="closeAbout()">Close</button>
+</div>
+
 <!-- PRODUCTS -->
-<div class="container" id="products">
+<div class="container">
 
 <div class="card" data-category="book">
 <img src="https://m.media-amazon.com/images/I/51ssbKdZBxL._SY342_.jpg">
@@ -139,7 +170,7 @@ button{
 
 <div class="card" data-category="book">
 <img src="https://m.media-amazon.com/images/I/71sduHKX8aL._SY385_.jpg">
-<h3>Oswaal Question Bank (Set of 2)</h3>
+<h3>Oswaal Question Bank</h3>
 <p class="price">₹828</p>
 <a href="https://www.amazon.in/Mathematics-Chapter-wise-Topic-wise-Competency-Comprehensive/dp/9377137675" target="_blank">
 <button>Check Price</button>
@@ -148,7 +179,7 @@ button{
 
 <div class="card" data-category="calculator">
 <img src="https://m.media-amazon.com/images/I/71drqWPeL0L._SY450_.jpg">
-<h3>Scientific Calculator (240 Functions)</h3>
+<h3>Scientific Calculator</h3>
 <p class="price">₹499</p>
 <a href="https://www.amazon.in/Scientific-Calculator-Engineering-Competitive-Preparation/dp/B0GNSDB6J4" target="_blank">
 <button>Check Price</button>
@@ -157,7 +188,7 @@ button{
 
 <div class="card" data-category="lamp">
 <img src="https://m.media-amazon.com/images/I/615CD0+PNUL._SX342_.jpg">
-<h3>LED Study Lamp with Holder</h3>
+<h3>LED Study Lamp</h3>
 <p class="price">₹999</p>
 <a href="https://www.amazon.in/One94Store-Desk-Lamp-Phone-Holder/dp/B0FR58SSFP" target="_blank">
 <button>Check Price</button>
@@ -167,7 +198,19 @@ button{
 </div>
 
 <script>
-// PANEL
+
+/* FIREBASE */
+const firebaseConfig = {
+ apiKey: "YOUR_API_KEY",
+ authDomain: "sun-set-kart.firebaseapp.com",
+ projectId: "sun-set-kart",
+ appId: "YOUR_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/* MENU */
 function openMenu(){
  document.getElementById("sideMenu").classList.add("active");
  document.getElementById("overlay").style.display="block";
@@ -177,7 +220,7 @@ function closeMenu(){
  document.getElementById("overlay").style.display="none";
 }
 
-// LOGIN
+/* LOGIN */
 function openLogin(){
  document.getElementById("loginBox").style.display="block";
 }
@@ -185,31 +228,53 @@ function closeLogin(){
  document.getElementById("loginBox").style.display="none";
 }
 
-// SEARCH
+/* ABOUT */
+function openAbout(){
+ document.getElementById("aboutBox").style.display="block";
+}
+function closeAbout(){
+ document.getElementById("aboutBox").style.display="none";
+}
+
+/* GOOGLE LOGIN */
+function loginWithGoogle(){
+
+ let provider = new firebase.auth.GoogleAuthProvider();
+
+ auth.signInWithPopup(provider)
+ .then((result)=>{
+   let user = result.user;
+
+   document.getElementById("userArea").innerHTML = `
+     <img src="${user.photoURL}">
+     ${user.displayName}
+   `;
+
+   closeLogin();
+ })
+ .catch(err=>alert(err.message));
+}
+
+/* SEARCH */
 function searchProduct(){
  let input=document.getElementById("search").value.toLowerCase();
  let cards=document.getElementsByClassName("card");
 
- for(let i=0;i<cards.length;i++){
-   let text=cards[i].innerText.toLowerCase();
-   cards[i].style.display=text.includes(input)?"block":"none";
+ for(let c of cards){
+  c.style.display=c.innerText.toLowerCase().includes(input)?"block":"none";
  }
 }
 
-// FILTER
-function filterProduct(category){
+/* FILTER */
+function filterProduct(cat){
  let cards=document.getElementsByClassName("card");
 
- for(let i=0;i<cards.length;i++){
-   let cat=cards[i].getAttribute("data-category");
-
-   if(category=="" || cat.includes(category)){
-     cards[i].style.display="block";
-   } else {
-     cards[i].style.display="none";
-   }
+ for(let c of cards){
+  let ccat=c.getAttribute("data-category");
+  c.style.display=(cat===""||ccat===cat)?"block":"none";
  }
 }
+
 </script>
 
 </body>

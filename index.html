@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudyKart</title>
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
@@ -27,15 +27,16 @@ body{margin:0;font-family:Arial;background:#eaeded}
  width:180px;
 }
 
+/* USER */
 #userArea{
- cursor:pointer;
  display:flex;
  align-items:center;
  gap:6px;
+ cursor:pointer;
 }
 
 #userArea img{
- width:25px;height:25px;border-radius:50%;
+ width:28px;height:28px;border-radius:50%;
 }
 
 /* SIDE PANEL */
@@ -73,11 +74,24 @@ body{margin:0;font-family:Arial;background:#eaeded}
  z-index:2000;
 }
 
+/* ABOUT */
+#aboutBox{
+ display:none;
+ position:fixed;
+ top:50%;left:50%;
+ transform:translate(-50%,-50%);
+ background:white;
+ padding:20px;
+ border-radius:10px;
+ z-index:2000;
+}
+
 /* PRODUCTS */
 .container{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
- gap:15px;padding:15px;
+ gap:15px;
+ padding:15px;
 }
 
 .card{
@@ -149,11 +163,13 @@ button{
 </div>
 
 <!-- ABOUT -->
-<div id="aboutBox" style="display:none;position:fixed;top:50%;left:50%;
-transform:translate(-50%,-50%);background:white;padding:20px;border-radius:10px;z-index:2000;">
-<h3>About StudyKart</h3>
-<p>StudyKart is an affiliate store for students to find books, calculators and study tools.</p>
-<button onclick="closeAbout()">Close</button>
+<div id="aboutBox">
+ <h3>About StudyKart</h3>
+ <p>
+ StudyKart is a student-focused affiliate platform where you can find books,
+ calculators and study tools at best prices.
+ </p>
+ <button onclick="closeAbout()">Close</button>
 </div>
 
 <!-- PRODUCTS -->
@@ -199,31 +215,16 @@ transform:translate(-50%,-50%);background:white;padding:20px;border-radius:10px;
 
 <script>
 
-/* FIREBASE */
+/* FIREBASE CONFIG (PUT YOURS HERE) */
 const firebaseConfig = {
-  apiKey: "AIzaSyDdCfq6AMfFRt2xRT3bPh_MCMX2odjzPs",
-  authDomain: "sun-set-kart.firebaseapp.com",
-  projectId: "sun-set-kart",
-  storageBucket: "sun-set-kart.appspot.com",
-  messagingSenderId: "756182957790",
-  appId: "1:756182957790:web:4c5bf695dfb795ffe0cc4f"
+ apiKey: "YOUR_API_KEY",
+ authDomain: "YOUR_PROJECT.firebaseapp.com",
+ projectId: "YOUR_PROJECT_ID",
+ appId: "YOUR_APP_ID"
 };
 
-window.addEventListener("load", function () {
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDdCfq6AMfFRt2xRT3bPh_MCMX2odjzPs",
-    authDomain: "sun-set-kart.firebaseapp.com",
-    projectId: "sun-set-kart",
-    storageBucket: "sun-set-kart.appspot.com",
-    messagingSenderId: "756182957790",
-    appId: "1:756182957790:web:4c5bf695dfb795ffe0cc4f"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  window.auth = firebase.auth();
-
-});
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 /* MENU */
 function openMenu(){
@@ -253,7 +254,6 @@ function closeAbout(){
 
 /* GOOGLE LOGIN */
 function loginWithGoogle(){
-
  let provider = new firebase.auth.GoogleAuthProvider();
 
  auth.signInWithPopup(provider)
@@ -261,17 +261,24 @@ function loginWithGoogle(){
    let user = result.user;
 
    document.getElementById("userArea").innerHTML = `
-     <img src="${user.photoURL}" style="width:25px;height:25px;border-radius:50%;">
-     ${user.displayName}
+     <img src="${user.photoURL}">
+     <span>${user.displayName}</span>
    `;
- })
- .catch((error)=>{
-   console.log(error);
-   alert(error.message);
- });
 
+   closeLogin();
+ })
+ .catch(err=>alert(err.message));
 }
 
+/* AUTO LOGIN */
+auth.onAuthStateChanged(user=>{
+ if(user){
+  document.getElementById("userArea").innerHTML = `
+    <img src="${user.photoURL}">
+    <span>${user.displayName}</span>
+  `;
+ }
+});
 
 /* SEARCH */
 function searchProduct(){
@@ -291,14 +298,7 @@ function filterProduct(cat){
   let ccat=c.getAttribute("data-category");
   c.style.display=(cat===""||ccat===cat)?"block":"none";
  }
-
-
 }
-
-//
-console.log("Firebase object:", typeof firebase);
-console.log("Auth object:", window.auth);
-});
 
 </script>
 

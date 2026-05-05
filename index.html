@@ -201,10 +201,12 @@ transform:translate(-50%,-50%);background:white;padding:20px;border-radius:10px;
 
 /* FIREBASE */
 const firebaseConfig = {
- apiKey: "YOUR_API_KEY",
- authDomain: "sun-set-kart.firebaseapp.com",
- projectId: "sun-set-kart",
- appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDdCfq6AMfFRt2xRT3bPh_MCMX2odjzPs",
+  authDomain: "sun-set-kart.firebaseapp.com",
+  projectId: "sun-set-kart",
+  storageBucket: "sun-set-kart.firebasestorage.app",
+  messagingSenderId: "756182957790",
+  appId: "1:756182957790:web:4c5bf695dfb795ffe0cc4f"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -246,14 +248,17 @@ function loginWithGoogle(){
    let user = result.user;
 
    document.getElementById("userArea").innerHTML = `
-     <img src="${user.photoURL}">
+     <img src="${user.photoURL}" style="width:25px;height:25px;border-radius:50%;">
      ${user.displayName}
    `;
-
-   closeLogin();
  })
- .catch(err=>alert(err.message));
+ .catch((error)=>{
+   console.log(error);
+   alert(error.message);
+ });
+
 }
+
 
 /* SEARCH */
 function searchProduct(){

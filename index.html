@@ -241,6 +241,20 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 
+window.onload = function(){
+
+const user = localStorage.getItem("firebaseUser");
+
+if(user){
+
+document.getElementById("userArea").innerHTML = `
+👋 ${user}
+`;
+
+}
+
+}
+
 /* MENU */
 function openMenu(){
  document.getElementById("sideMenu").classList.add("active");

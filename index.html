@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StudyKart</title>
 
-<!-- Firebase -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
@@ -27,16 +27,15 @@ body{margin:0;font-family:Arial;background:#eaeded}
  width:180px;
 }
 
-/* USER */
 #userArea{
+ cursor:pointer;
  display:flex;
  align-items:center;
  gap:6px;
- cursor:pointer;
 }
 
 #userArea img{
- width:28px;height:28px;border-radius:50%;
+ width:25px;height:25px;border-radius:50%;
 }
 
 /* SIDE PANEL */
@@ -74,24 +73,11 @@ body{margin:0;font-family:Arial;background:#eaeded}
  z-index:2000;
 }
 
-/* ABOUT */
-#aboutBox{
- display:none;
- position:fixed;
- top:50%;left:50%;
- transform:translate(-50%,-50%);
- background:white;
- padding:20px;
- border-radius:10px;
- z-index:2000;
-}
-
 /* PRODUCTS */
 .container{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
- gap:15px;
- padding:15px;
+ gap:15px;padding:15px;
 }
 
 .card{
@@ -158,18 +144,17 @@ button{
 <div id="loginBox">
  <h3>Login</h3>
  <button onclick="loginWithGoogle()">Login with Google</button>
+ <button onclick="loginWithEmailPassword()">Login with Email & Password</button>
  <br><br>
  <button onclick="closeLogin()">Close</button>
 </div>
 
 <!-- ABOUT -->
-<div id="aboutBox">
- <h3>About StudyKart</h3>
- <p>
- StudyKart is a student-focused affiliate platform where you can find books,
- calculators and study tools at best prices.
- </p>
- <button onclick="closeAbout()">Close</button>
+<div id="aboutBox" style="display:none;position:fixed;top:50%;left:50%;
+transform:translate(-50%,-50%);background:white;padding:20px;border-radius:10px;z-index:2000;">
+<h3>About StudyKart</h3>
+<p>StudyKart is an affiliate store for students to find books, calculators and study tools.</p>
+<button onclick="closeAbout()">Close</button>
 </div>
 
 <!-- PRODUCTS -->
@@ -179,8 +164,8 @@ button{
 <img src="https://m.media-amazon.com/images/I/51ssbKdZBxL._SY342_.jpg">
 <h3>NCERT Science Book Class 9</h3>
 <p class="price">₹210</p>
-<a href="https://amzn.to/4w9ATy7" target="_blank">
-<button>Buy Now</button>
+<a href="https://www.amazon.in/NCERT-SCIENCE-BOOK-CLASS-IX-9th/dp/B08KS385MB?crid=2ZIJGAU96SVKT&dib=eyJ2IjoiMSJ9.8hjdgPNAAUp5V5lK7i6gpIwM7JhjQxS_hshPTvFDGqEfnYYXnT8SVzH1Cq5na5SptDNOKJwYo3mNrly3liqDO__qWi_agj-HnibxcLsbeUSAfsnO5uplfu6jrLv-1pOpO5rTFW_SzdNTZR2Q7u_or2-fH6BIfr8yjn4mcmMBetlzNyGwZtMcrMmdF5bYjsaEXpQx9snrnypWUY7WNjOCYWfA0J5oiBiTtiQmDcUqLk4.6V7w6zd8wJcFA1fo5WGIm82iZ41vgi1VsB_0k0LY8sw&dib_tag=se&keywords=NCERT+Science+Book+Class+9&qid=1778418031&refinements=p_36%3A-21000&rnid=1741387031&sprefix=ncert+science+book+class+9%2Caps%2C445&sr=8-5&linkCode=ll2&tag=sunsetkart-21&linkId=575a9efcc28f4f2ce4494f12bdec36ff&ref_=as_li_ss_tl">
+<button>Check Price</button>
 </a>
 </div>
 
@@ -188,8 +173,8 @@ button{
 <img src="https://m.media-amazon.com/images/I/71sduHKX8aL._SY385_.jpg">
 <h3>Oswaal Question Bank</h3>
 <p class="price">₹828</p>
-<a href="https://amzn.to/4cPNij5" target="_blank">
-<button>Buy Now</button>
+<a href="https://www.amazon.in/Mathematics-Chapter-wise-Topic-wise-Competency-Comprehensive/dp/9377137675?crid=Y6OBHONLZNWU&dib=eyJ2IjoiMSJ9.1Nlcjud-icnjl2yyHPRCburl1-sH-ztRQDFdM5TeAwRxFU8bj3d-ITfHZroC6UefB4MiHm7Dr1GWwHCV8MBGhe4ZCyI4PUac4Kqf8WsKixLANYrQf09_r1kLP-ZyD9qIuhngpsTBLzycxlAuzefBebsXiT9NPSdG50cPUg6nQgYDtbwjANVeZf7H4rJ35nETX804RHgg1E-3cbwgFXzLqkAcrbniqB13VnTOkVCLh7I.Ka98t71CsIQNYGC3dfYsd6YG2aG9GlbBGlWz5mqPBxU&dib_tag=se&keywords=Oswaal+Question+Bank+class+9&qid=1778417895&sprefix=oswaal+question+bank+class+9%2Caps%2C453&sr=8-5&linkCode=ll2&tag=sunsetkart-21&linkId=a62864c50cbf9de55aeacb382daad21c&ref_=as_li_ss_tl">
+<button>Check Price</button>
 </a>
 </div>
 
@@ -197,8 +182,17 @@ button{
 <img src="https://m.media-amazon.com/images/I/71drqWPeL0L._SY450_.jpg">
 <h3>Scientific Calculator</h3>
 <p class="price">₹499</p>
-<a href="https://amzn.to/42huzXD" target="_blank">
-<button>Buy Now</button>
+<a href="https://www.amazon.in/Scientific-Calculator-Functions-Fractional-Arithmetic/dp/B085P5BLR8?dib=eyJ2IjoiMSJ9.mJtB9pB-jl8VlMw_Ub28yIL0xlktfdyVFmO6BMmENxG5poAhn9dsevzN-30H3aoGVnfRN1Ivvjf8Xj24gDqyeWdyXyiP9MgnFZcRR3Snl6jeIMYQkga5-dvjH6T6Yt3AtHoQgvgEJnUWGEYWR7R55HsbyaroZH7I9SU3EMp26qxa-hj9WhBrhUujreBRejWFtczl_ILig5XfnWL36iFGY6aoojoMLnjdPI6p4EPY1Lw.-tbsf6ZWf-CRtpr7raPKMj8ucA4qkG4P0VyTuA4Etq0&dib_tag=se&keywords=calculator&qid=1778417647&sr=8-4&linkCode=ll2&tag=sunsetkart-21&linkId=fa6771defda01a9362e87f4ac0d8bd23&ref_=as_li_ss_tl">
+<button>Check Price</button>
+</a>
+</div>
+
+<div class="card" data-category="table">
+<img src="https://m.media-amazon.com/images/I/51u3i6UMooL._SY300_SX300_QL70_FMwebp_.jpg">
+<h3>Study Table</h3>
+<p class="price">₹49,999</p>
+<a href="https://www.amazon.in/Lukzer-Electric-Automatic-Adjustable-Ergonomic/dp/B0GVKHS6P9?crid=D7A3NXGQMJ4C&dib=eyJ2IjoiMSJ9.eBU8pK0W6Af9F6AtR-1Yep5HG9Ek3PPheQnOvAOmElr5YDVqlgLChEiZqnmYlCzW_RLd-kBjsnJPTWDlfCDUOCDsZizyCMS8yqwaTdh3atzvD3assCOb0xGwGcvNjWj2oE5k2pAdfFxeOJdkB_ytBanMmUGtgbdTBXaUAOH7zeY57dAePixVWLLRjmgq18R9zIEhFZNsz7FPMlmg2ezD16gyufCGaewg04xyInZX_J_jJFBa4120_Hhcw3n3WsQHKTMLWjGloKlwYCyr86gEb4Y4RDD1luUuIGglLkIbJks.EnJLlfoSct4vFkjHS29Q8LMKg_LVwwCIxucdHj6z07c&dib_tag=se&keywords=study%2Btable%2Bfor%2Bhome&qid=1778415643&refinements=p_36%3A1030000-&rnid=28219984031&sprefix=stu%2Caps%2C527&sr=8-5&th=1&linkCode=ll2&tag=sunsetkart-21&linkId=b9278e4287328fe0517c8a65fd279e16&ref_=as_li_ss_tl">
+<button>Check Price</button>
 </a>
 </div>
 
@@ -206,8 +200,26 @@ button{
 <img src="https://m.media-amazon.com/images/I/615CD0+PNUL._SX342_.jpg">
 <h3>LED Study Lamp</h3>
 <p class="price">₹999</p>
-<a href="https://amzn.to/4tfLW6a" target="_blank">
-<button>Buy Now</button>
+<a href="https://www.amazon.in/FLYNGO-Students-Rechargeable-Studying-204White/dp/B0D8FY9KH6?crid=Y17G9LDF8S8H&dib=eyJ2IjoiMSJ9.C_y1AihSBJ56V1ZwrOe-oSZ6RHYj3vQ42QMEMObRnixWixXFXrUj3FmS0KdwrFTmf-_hRuGI4rwdKaupuPmHh3ySdbnNLyvi7Yu5UhF72oK1j74DcUQWXyrylGMSiGXUFPADnCH3ApDg50J-fBJkybgbC2eEMWKzNVRNcz6UTCINbhHqmNGPFL_d59NTA8SfJPSKE9_OS1mn-pjMJC_-OhDHFkcqaeUKZPK8MuaJCZHT5BrshBsBVEpSsfanXP3ygAKZ98PLTmstSQLSb25fzyfeRGGHRBbodHdRsG4u9CQ.5MdgUDFp2kSQsScDvOgvjldY9tTnfhkdMDXdeY2W_z0&dib_tag=se&keywords=study%2Blamp&qid=1778418138&sprefix=study%2Blamp%2Caps%2C459&sr=8-4-spons&aref=M8hEinwjjo&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll2&tag=sunsetkart-21&linkId=2591dd7a5b007e219beee281709870b1&ref_=as_li_ss_tl">
+<button>Check Price</button>
+</a>
+</div>
+
+<div class="card" data-category="lamp">
+<img src="https://m.media-amazon.com/images/I/51GIeLAOF1L._SY450_.jpg">
+<h3>Gel Pen</h3>
+<p class="price">₹100</p>
+<a href="https://www.amazon.in/FLAIR-Minimalistic-Aesthetic-Effortless-Writing/dp/B0D816QSDV?crid=2Z6UIRI8TUV9W&dib=eyJ2IjoiMSJ9.kOpRQ0oQb3NgZSJoINRKuKYpNk-Iee_Z7KOYUiM0O5AO2KcOgDNVnbdJLCjG6TUle-72HlnbNrc35dBczdVDLLhyxT2G-VhQ0ADlwi1adksITWbKuaD0TIujqhNYAkPJUHT2iIjGE6jkSqfvFn6y2DnahxOYsmU4BgPzwizEsN_hcTY-wYov2q4fkdACqtiNja23WEqcLcFPgBzUA-LOiFBcAKHQRa2Xza2ssTYU3QOxlu_3gLtEKltadl7qKOzT4BMtrQnDUEhakFYvu_pLhLcup9mhz_vlBxax9vvN_r0.EUbhr6BMIyam3MTwmlwMZ8msLC_NIwr7rnxJlkm4dLA&dib_tag=se&keywords=pen&qid=1778418441&sprefix=pen%2Caps%2C497&sr=8-15&th=1&linkCode=ll2&tag=sunsetkart-21&linkId=ef9e09693d1a87029f551d5234fa192c&ref_=as_li_ss_tl">
+<button>Check Price</button>
+</a>
+</div>
+
+<div class="card" data-category="lamp">
+<img src="https://m.media-amazon.com/images/I/31G-8meYYZL._SX679_.jpg">
+<h3>Zero Power Computer Specs</h3>
+<p class="price">₹999</p>
+<a href="https://www.amazon.in/RAYBLOC-Protection-Blocking-Computer-Lightweight/dp/B0FRMP621C?crid=9L9DOHO812KE&dib=eyJ2IjoiMSJ9.HcDYINReF9NbYka-k4zrU1b5D2JjMN28zp_JM1RGJZFyM2Sz4ZlKF8KbD6gfsL9DXhgQ66DpssBZUOrDHLPpK_bUqeGOzyNYr5_6YsIPR5LH3v3cFExFdKjnC_ZQUmmyIVtvj-1p8PWJOq6GWvYAe6-IWvfqc2pKRotD-1Oc6cRHd5a0aLwylQuDwQvuCtkHIdjUxPIgY-MNVb3xCiPpW1tKlwMOjgbyhejaeK9ROWD5YFBbjc8f6dpD5yVJfy2XAxOMQ1gr0bLfxPhUh-DmmWEpZmfPF6j9BnDeqRKqWz8.dhvpS4Yg1bTTqS7QNam1XBZtqf-49kRENUm8IQ7ay40&dib_tag=se&keywords=transparent%2Bgoggles&qid=1778418733&refinements=p_n_is_cod_eligible%3A4931671031&rnid=4931670031&sprefix=trsansparent%2Bgoogles%2Caps%2C428&sr=8-15&th=1&linkCode=ll2&tag=sunsetkart-21&linkId=3769679d6cce12cd29a412ba226fe82d&ref_=as_li_ss_tl">
+<button>Check Price</button>
 </a>
 </div>
 
@@ -215,15 +227,18 @@ button{
 
 <script>
 
-/* FIREBASE CONFIG (PUT YOURS HERE) */
+/* FIREBASE */
 const firebaseConfig = {
- apiKey: "YOUR_API_KEY",
- authDomain: "YOUR_PROJECT.firebaseapp.com",
- projectId: "YOUR_PROJECT_ID",
- appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDdCfq6AMfFRt2xRT3bPh_MCMX2odjzPs",
+  authDomain: "sun-set-kart.firebaseapp.com",
+  projectId: "sun-set-kart",
+  storageBucket: "sun-set-kart.appspot.com",
+  messagingSenderId: "756182957790",
+  appId: "1:756182957790:web:4c5bf695dfb795ffe0cc4f"
 };
 
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
 
 /* MENU */
@@ -254,6 +269,7 @@ function closeAbout(){
 
 /* GOOGLE LOGIN */
 function loginWithGoogle(){
+
  let provider = new firebase.auth.GoogleAuthProvider();
 
  auth.signInWithPopup(provider)
@@ -261,24 +277,24 @@ function loginWithGoogle(){
    let user = result.user;
 
    document.getElementById("userArea").innerHTML = `
-     <img src="${user.photoURL}">
-     <span>${user.displayName}</span>
+     <img src="${user.photoURL}" style="width:25px;height:25px;border-radius:50%;">
+     ${user.displayName}
    `;
-
-   closeLogin();
  })
- .catch(err=>alert(err.message));
+ .catch((error)=>{
+   console.log(error);
+   alert(error.message);
+ });
+
 }
 
-/* AUTO LOGIN */
-auth.onAuthStateChanged(user=>{
- if(user){
-  document.getElementById("userArea").innerHTML = `
-    <img src="${user.photoURL}">
-    <span>${user.displayName}</span>
-  `;
- }
-});
+/*Email & Password*/
+function loginWithEmailPassword(){
+  window.location.href =
+  "https://sun-set-yt.github.io/authentication/?redirect=" +
+  encodeURIComponent(window.location.href);
+}
+
 
 /* SEARCH */
 function searchProduct(){
@@ -298,7 +314,16 @@ function filterProduct(cat){
   let ccat=c.getAttribute("data-category");
   c.style.display=(cat===""||ccat===cat)?"block":"none";
  }
+
+
 }
+
+//
+console.log("Firebase object:", typeof firebase);
+console.log("Auth object:", window.auth);
+
+
+
 
 </script>
 
